@@ -41,7 +41,10 @@ const createTableQuery = `
     email VARCHAR(255) NOT NULL,
     password VARCHAR(255) NOT NULL
   );
-  INSERT INTO user (name, surname, email, password) VALUES ('Fatih', 'Özgür', 'test@admin', '123456');
+`;
+
+const testUserQuery = `
+  INSERT INTO user (name, surname, email, password) VALUES ('test', 'test', 'test@admin', '123456');
 `;
 
 connection.query(createDatabaseQuery, (err) => {
@@ -68,6 +71,17 @@ connection.query(createDatabaseQuery, (err) => {
       }
 
       console.log("Veritabanı ve tablo başarıyla oluşturuldu.");
+
+      // Test kullanıcısı oluşturma işlemi
+      connection.query(testUserQuery, (err) => {
+        if (err) {
+          console.error("Test kullanıcısı oluşturma hatası:", err);
+          connection.end();
+          return;
+        }
+
+        console.log("Test kullanıcısı başarıyla oluşturuldu.");
+      });
 
       // Define a route to retrieve all users
       app.get("/all", (req, res) => {
