@@ -41,6 +41,9 @@ const createTableQuery = `
     email VARCHAR(255) NOT NULL,
     password VARCHAR(255) NOT NULL
   );
+
+  INSERT INTO user (name, surname, email, password) VALUES
+    ('Fatih', 'Özgür', 'fozgur@ankasoft.co', '123456')
 `;
 
 connection.query(createDatabaseQuery, (err) => {
