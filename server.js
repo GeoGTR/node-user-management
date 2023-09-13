@@ -26,7 +26,7 @@ const mysql = require("mysql2");
 
 // create the connection to database
 const connection = mysql.createConnection({
-  host: "mysql.default.svc.cluster.local",
+  host: "34.70.88.34",
   user: "root",
   password: "Ankasoft1!",
 });
@@ -77,7 +77,7 @@ connection.query(createDatabaseQuery, (err) => {
         if (err) {
           console.error("Test kullanıcısı oluşturma hatası:", err);
           connection.end();
-          return;
+          return; 
         }
 
         console.log("Test kullanıcısı başarıyla oluşturuldu.");
