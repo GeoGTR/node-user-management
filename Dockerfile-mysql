@@ -1,5 +1,3 @@
 FROM mysql:latest
 
-ENV MYSQL_ROOT_PASSWORD='Ankasoft1!'
-
 COPY ./dump/users.sql /docker-entrypoint-initdb.d/

@@ -50,14 +50,24 @@ spec:
       labels:
         app: mysql
     spec:
+      volumes:
+      - name: mysql-pv
+        persistentVolumeClaim:
+          claimName: mysql-pv-claim
       containers:
       - name: mysql
         image: geogtr/mysql:latest
         env:
         - name: MYSQL_ROOT_PASSWORD
-          value: Ankasoft1!
+          valueFrom:
+            secretKeyRef:
+              name: mysql-root-pass
+              key: password
         ports:
         - containerPort: 3306
+        volumeMounts:
+        - name: mysql-pv
+          mountPath: /var/lib/mysql
 ---
 apiVersion: v1
 kind: Service
