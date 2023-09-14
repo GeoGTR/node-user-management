@@ -83,7 +83,7 @@ const testUserQuery = `
       });
 
       app.listen(port, () => {
-        console.log(`App http://localhost:${port} adresinde dinleniyor.`);
+        console.log(`Server listening on port ${port}`);
       });
 
       app.post("/add", (req, res) => {

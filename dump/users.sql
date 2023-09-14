@@ -14,5 +14,5 @@ CREATE TABLE IF NOT EXISTS user (
 );
 
 INSERT INTO user (name, surname, email, password) VALUES
-('Fatih', 'Özgür', 'fozgur@ankasoft.co','test');
+('Fatih', 'Ozgur', 'fozgur@ankasoft.co','test');
 

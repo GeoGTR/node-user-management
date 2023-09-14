@@ -16,7 +16,7 @@
                 
                     </div>
                     <div class="card-body">
-                        <form id="userForm" action="http://127.0.0.1:4000/add" method="post">
+                        <form id="userForm" action="http://expressjs.default.svc.cluster.local:4000/add" method="post">
                             <!-- Form fields go here, as in the previous example -->
                             <div class="form-group">
                                 <label for="name">Name:</label>
@@ -71,7 +71,7 @@
           async function fetchUserList() {
             try {
                 console.log("Fetching all users for reloading")
-                const response = await fetch('http://127.0.0.1:4000/all');
+                const response = await fetch('http://expressjs.default.svc.cluster.local:4000/all');
                 const users = await response.json();
                 console.log(users)
 
@@ -96,7 +96,7 @@
             });
 
             // Construct a URL with query parameters
-            const url = new URL('http://127.0.0.1:4000/add');
+            const url = new URL('http://expressjs.default.svc.cluster.local:4000/add');
             url.search = new URLSearchParams(userData).toString();
 
             // Send a POST request with query parameters
