@@ -27,6 +27,7 @@ const mysql = require("mysql2");
 // create the connection to database
 const connection = mysql.createConnection({
   host: "mysql.default.svc.cluster.local",
+  port: "3306",
   user: "root",
   password: "Ankasoft1!",
 });
