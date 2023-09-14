@@ -32,28 +32,12 @@ const connection = mysql.createConnection({
   password: "Ankasoft1!",
 });
 
-const createDatabaseQuery = "CREATE DATABASE IF NOT EXISTS test;";
 const useDatabaseQuery = "USE test;";
-const createTableQuery = `
-  CREATE TABLE IF NOT EXISTS user (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(255) NOT NULL,
-    surname VARCHAR(255) NOT NULL,
-    email VARCHAR(255) NOT NULL,
-    password VARCHAR(255) NOT NULL
-  );
-`;
 
 const testUserQuery = `
   INSERT INTO user (name, surname, email, password) VALUES ('test', 'test', 'test@admin', '123456');
 `;
 
-connection.query(createDatabaseQuery, (err) => {
-  if (err) {
-    console.error("Veritabanı oluşturma hatası:", err);
-    connection.end();
-    return;
-  }
 
   // Oluşturulan veritabanını kullanma işlemi
   connection.query(useDatabaseQuery, (err) => {
@@ -62,16 +46,6 @@ connection.query(createDatabaseQuery, (err) => {
       connection.end();
       return;
     }
-
-    // Tabloyu oluşturma işlemi
-    connection.query(createTableQuery, (err) => {
-      if (err) {
-        console.error("Tablo oluşturma hatası:", err);
-        connection.end();
-        return;
-      }
-
-      console.log("Veritabanı ve tablo başarıyla oluşturuldu.");
 
       // Test kullanıcısı oluşturma işlemi
       connection.query(testUserQuery, (err) => {
@@ -134,5 +108,3 @@ connection.query(createDatabaseQuery, (err) => {
         );
       });
     });
-  });
-});
