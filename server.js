@@ -2,6 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const app = express();
 const port = process.env.PORT || 4000;
+const pass = process.env.MYSQL_ROOT_PASSWORD;
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
@@ -29,7 +30,7 @@ const connection = mysql.createConnection({
   host: "mysql.default.svc.cluster.local",
   port: "3306",
   user: "root",
-  password: "Ankasoft1!",
+  password: pass,
 });
 
 const useDatabaseQuery = "USE test;";

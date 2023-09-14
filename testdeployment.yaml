@@ -18,6 +18,12 @@ spec:
       containers:
       - name: expressjs
         image: geogtr/devopspractice:latest
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mysql-root-pass
+              key: password
         ports:
         - containerPort: 4000
 ---
