@@ -13,7 +13,7 @@ pipeline {
                     sh 'npm install'
                     withSonarQubeEnv('sonar') {
                         sh 'npm install sonarqube-scanner'
-                        sh 'npm run sonar'
+                        sh 'node_modules/.bin/sonar-scanner'
                     }
                 }
             }
