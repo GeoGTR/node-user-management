@@ -2,28 +2,42 @@
 pipeline {
     agent any
     stages {
-        stage('Code Scan') {
+        stage('Clone Code') {
             steps {
-                echo 'Building..'
+                git branch: 'main', url: 'https://github.com/GeoGTR/node-user-management.git'
+            }
+        }
+        stage('SonarQube analysis') {
+            steps {
+                nodejs(nodeJSInstallationName: 'nodejs') {
+                    sh 'npm install'
+                    withSonarQubeEnv('sonar') {
+                        sh 'npm install sonarqube-scanner'
+                        sh 'npm run sonar'
+                    }
+                }
             }
         }
         stage('Build Image and Push to Registry') {
             steps {
-                echo "------Docker login--------"
-                echo Ankasoft1! | sudo -S echo "build and push process starting"
-                sudo docker login -u "geogtr" -p "Registry123." docker.io
-                echo "------Docker build------"
-                sudo docker build -t geogtr/devopspractice:${BUILD_ID} -f Dockerfile-app .
-                sudo docker build -t geogtr/mysql:${BUILD_ID} -f Dockerfile-mysql .
-                echo "------Docker push------"
-                sudo docker push geogtr/devopspractice:${BUILD_ID}
-                sudo docker push geogtr/mysql:${BUILD_ID}
+                script {
+                    withDockerRegistry(credentialsId: 'geogtr') {
+                        sh "docker build -t geogtr/devopspractice:${BUILD_ID} -f Dockerfile-app ."
+                        sh "docker build -t geogtr/mysql:${BUILD_ID} -f Dockerfile-mysql ."
+                        sh "docker push geogtr/devopspractice:${BUILD_ID}"
+                        sh "docker push geogtr/mysql:${BUILD_ID}"
+                    }
+                }
             }
         }
-        stage('Image Scan') {
+        stage('Nodejs Image Scan') {
             steps {
-                echo "------Image Scanning with Grype--------"
-                grypeScan scanDest: "docker:geogtr/devopspractice:${BUILD_ID}", repName: testtesttest.txt
+                grypeScan autoInstall: false, repName: "grypeAppImageReport_${JOB_NAME}_${BUILD_NUMBER}.txt", scanDest: "docker:geogtr/devopspractice:${BUILD_ID}"
+            }
+        }
+        stage('Mysql Image Scan') {
+            steps {
+                grypeScan autoInstall: false, repName: "grypeMysqlImageReport_${JOB_NAME}_${BUILD_NUMBER}.txt", scanDest: "docker:geogtr/mysql:${BUILD_ID}"
             }
         }
         stage('Deploy to Test Cluster') {
