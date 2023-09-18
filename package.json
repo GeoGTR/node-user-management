@@ -4,7 +4,8 @@
   "description": "accelerator-description",
   "main": "server.js",
   "scripts": {
-    "server": "node server.js"
+    "server": "node server.js",
+    "test" : "node testsetup.js"
   },
   "license": "Apache License, Version 2.0",
   "dependencies": {

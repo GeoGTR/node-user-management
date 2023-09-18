@@ -1,7 +1,16 @@
 //make a pipeline
 pipeline {
     agent any
+    
+    tools {nodejs "nodejs"}
+    
+    
     stages {
+        stage('Example test') {
+             steps {
+                sh 'npm test'
+            }
+        }
         stage('Clone Code') {
             steps {
                 git branch: 'main', url: 'https://github.com/GeoGTR/node-user-management.git'
@@ -36,7 +45,11 @@ pipeline {
         }
         stage('Deploy to Test Cluster') {
             steps {
-                echo 'Deploying....'
+                sh "gcloud auth activate-service-account --key-file jenkins-sa.json"
+                sh "gcloud container clusters get-credentials test-cluster --zone us-central1-c --project hybrid-creek-398619"
+                sh 'sed -i "s/latest/${BUILD_NUMBER}/g" testdeployment.yaml'
+                sh "cat testdeployment.yaml"
+                sh "kubectl apply -f testdeployment.yaml"
             }
         }
         stage('Test app in test cluster') {
