@@ -1,4 +1,4 @@
-const {By} = require('selenium-webdriver');
+const {By, Builder} = require('selenium-webdriver');
 const {suite} =  require('selenium-webdriver/testing');
 const assert = require('assert');
 
@@ -10,7 +10,7 @@ const screen = {
 
 suite(env=>{
     describe("Accounts listesi testleri",()=>{
-        let driver 
+        let driver;
         
         before(async()=>{
             driver = await new Builder()
