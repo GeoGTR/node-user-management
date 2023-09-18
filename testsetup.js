@@ -2,7 +2,7 @@ const {By} = require('selenium-webdriver');
 const {suite} =  require('selenium-webdriver/testing');
 const assert = require('assert');
 
-const chrome = require('selenium-webdriver/chromedriver')   
+const chrome = require('selenium-webdriver/chrome')   
 const screen = {
     width: 640,
     height: 480
@@ -10,12 +10,13 @@ const screen = {
 
 suite(env=>{
     describe("Accounts listesi testleri",()=>{
-        let driver = new Builder()
-        .forBrowser('chrome')
-        .setChromeOptions(new chrome.Options().headless().windowSize(screen));
-
+        let driver 
+        
         before(async()=>{
-            driver = await env.builder().build();
+            driver = await new Builder()
+            .forBrowser('chrome')
+            .setChromeOptions(new chrome.Options().headless().windowSize(screen))
+            .build();
         });
         after(async()=>{
             await driver.quit();
