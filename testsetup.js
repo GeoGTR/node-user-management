@@ -2,7 +2,7 @@ const {By} = require('selenium-webdriver');
 const {suite} =  require('selenium-webdriver/testing');
 const assert = require('assert');
 
-const chrome = require('selenium-webdriver/chrome')   
+const chrome = require('selenium-webdriver/chromedriver')   
 const screen = {
     width: 640,
     height: 480
@@ -13,7 +13,7 @@ suite(env=>{
         let driver = new Builder()
         .forBrowser('chrome')
         .setChromeOptions(new chrome.Options().headless().windowSize(screen));
-        
+
         before(async()=>{
             driver = await env.builder().build();
         });
