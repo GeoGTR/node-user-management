@@ -7,15 +7,9 @@ pipeline {
                 git branch: 'main', url: 'https://github.com/GeoGTR/node-user-management.git'
             }
         }
-        stage('SonarQube analysis') {
+        stage('Snyk analysis') {
             steps {
-                nodejs(nodeJSInstallationName: 'nodejs') {
-                    sh 'npm install'
-                    withSonarQubeEnv('sonar') {
-                        sh 'npm install sonarqube-scanner'
-                        sh 'node_modules/.bin/sonar-scanner'
-                    }
-                }
+                snykSecurity organisation: 'geogtr', projectName: 'node-user-management', severity: 'medium', snykInstallation: 'Snyk', snykTokenId: 'snyk-token', targetFile: 'package.json'
             }
         }
         stage('Build Image and Push to Registry') {
