@@ -60,9 +60,8 @@ driver.findElement(By.id('submit')).click();
 driver.wait(async () => {
     const list = await driver.findElement(By.id('userList'));
     const ulElement = await list.findElements(By.tagName('ul'));
-    const liElements = await ulElement[0].findElements(By.tagName('li'));
-    const lastLi = liElements[liElements.length - 1];
-    const text = await lastLi.getText();
+    const lastLiElement = await ulElement[ulElement.length - 1];
+    const text = await lastLiElement.getText();
     return text.includes('John Doe - johndoe@example.com');
   }, 5000).then(() => {
     console.log('Form başarıyla gönderildi ve listeye eklendi.');
