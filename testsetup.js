@@ -32,9 +32,16 @@
 
 const { Builder, By, Key, until } = require('selenium-webdriver');
 
+const chrome = require('selenium-webdriver/chrome');
+
+// Headless Chrome ayarları
+const chromeOptions = new chrome.Options();
+chromeOptions.addArguments('--headless'); // Tarayıcıyı headless modda başlat
+
 // WebDriver'ı oluştur
 const driver = new Builder()
   .forBrowser('chrome')
+  .setChromeOptions(chromeOptions)
   .build();
 
 // Web sitesine git
