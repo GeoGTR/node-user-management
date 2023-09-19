@@ -46,6 +46,9 @@ const driver = new Builder()
 
 // Web sitesine git
 driver.get('http://35.239.91.104:4000/');
+driver.wait(until.titleIs('Add User'), 1000);
+//wait 10 sec
+driver.sleep(3000);
 
 // Formu doldur
 driver.findElement(By.id('name')).sendKeys('John');
