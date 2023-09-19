@@ -54,9 +54,21 @@ pipeline {
                 sh 'node testsetup.js'  
             }
         }
-        stage('Deploy to Prod Cluster') {
+        stage('Commit Release Branch') {
             steps {
-                echo 'Deploying....'
+                sh "git checkout -b release-${BUILD_NUMBER}"
+                sh "git add ."
+                sh "git commit -m 'release-${BUILD_NUMBER}'"
+                sh "git push origin release-${BUILD_NUMBER}"
+            }
+        }
+        stage('Deploy to Release Namespace') {
+            steps {
+                sh "gcloud auth activate-service-account --key-file jenkins-sa.json"
+                sh "gcloud container clusters get-credentials test-cluster --zone us-central1-c --project hybrid-creek-398619"
+                sh 'sed -i "s/default/release/g" testdeployment.yaml'
+                sh "cat testdeployment.yaml"
+                sh "kubectl apply -f testdeployment.yaml"
             }
         }
     }
