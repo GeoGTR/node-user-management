@@ -3,6 +3,7 @@ kind: Deployment
 apiVersion: apps/v1
 metadata:
   name: expressjs
+  namespace: default
   labels:
     app: expressjs
 spec:
@@ -31,6 +32,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: expressjs
+  namespace: default
 spec:
   selector:
     app: expressjs
@@ -44,6 +46,7 @@ kind: Deployment
 apiVersion: apps/v1
 metadata:
   name: mysql
+  namespace: default
   labels:
     app: mysql
 spec:
@@ -79,6 +82,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: mysql
+  namespace: default
 spec:
   selector:
     app: mysql

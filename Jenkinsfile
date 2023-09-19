@@ -6,11 +6,6 @@ pipeline {
     
     
     stages {
-        stage('Example test') {
-             steps {
-                sh 'npm test'
-            }
-        }
         stage('Clone Code') {
             steps {
                 git branch: 'main', url: 'https://github.com/GeoGTR/node-user-management.git'
@@ -53,8 +48,10 @@ pipeline {
             }
         }
         stage('Test app in test cluster') {
-            steps {
-                echo 'Deploying....'
+             steps {
+                sh 'npm install chromedriver'
+                sh 'npm install selenium-webdriver'
+                sh 'node testsetup.js'  
             }
         }
         stage('Deploy to Prod Cluster') {
